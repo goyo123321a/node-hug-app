@@ -4,15 +4,9 @@ const path = require('path');
 const crypto = require('crypto');
 const http = require('http');
 const https = require('https');
-const { spawn, exec } = require('child_process');
+const { spawn } = require('child_process');
 const url = require('url');
 const httpProxy = require('http-proxy');
-
-// 动态导入 fetch
-const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args)).catch(() => {
-  console.warn('node-fetch 未安装，将使用 https 模块代替');
-  return null;
-});
 
 // 配置文件
 const config = {
@@ -21,7 +15,7 @@ const config = {
   autoAccess: process.env.AUTO_ACCESS === 'true',
   filePath: process.env.FILE_PATH || './tmp',
   subPath: process.env.SUB_PATH || 'sub',
-  port: process.env.SERVER_PORT || process.env.PORT || '7860',
+  port: process.env.SERVER_PORT || process.env.PORT || '3000',
   uuid: process.env.UUID || '4b3e2bfe-bde1-5def-d035-0cb572bbd046',
   nezhaServer: process.env.NEZHA_SERVER || '',
   nezhaPort: process.env.NEZHA_PORT || '',
@@ -804,8 +798,10 @@ async function getISP() {
 
 // 生成订阅链接
 async function generateLinks(domain) {
+  console.log('开始生成订阅链接，域名:', domain);
   try {
     const isp = await getISP();
+    console.log('获取ISP信息成功:', isp);
     let nodeName = config.name;
     
     if (nodeName) {
@@ -849,7 +845,13 @@ trojan://${config.uuid}@${config.cfip}:${config.cfport}?security=tls&sni=${domai
     const encoded = Buffer.from(subTxt).toString('base64');
     await fs.writeFile(files.sub, encoded);
     console.log(`订阅文件已保存: ${files.sub}`);
-    console.log(`订阅内容:\n${encoded}`);
+    console.log(`订阅内容（base64编码，前100字符）: ${encoded.substring(0, 100)}...`);
+    
+    // 同时也将节点保存到list文件
+    const nodes = subTxt.trim().split('\n').filter(line => line.trim() !== '');
+    await fs.writeFile(files.list, nodes.join('\n'));
+    console.log('节点列表已保存');
+    
   } catch (error) {
     console.error('生成订阅链接失败:', error.message);
   }
