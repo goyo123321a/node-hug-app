@@ -1,0 +1,17 @@
+{
+  "name": "xray-proxy-app",
+  "version": "1.0.0",
+  "description": "Node.js implementation of Xray proxy application",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "nodemon": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
