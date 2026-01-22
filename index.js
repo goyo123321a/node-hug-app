@@ -1,7 +1,7 @@
 const express = require('express');
 const fs = require('fs').promises;
 const fsSync = require('fs');
-const path = require('path');
+const path = require('path');  // path 模块在这里引入
 const http = require('http');
 const https = require('https');
 const { spawn, exec } = require('child_process');
@@ -248,17 +248,17 @@ function startHTTPServer() {
   const proxy = httpProxy.createProxyServer({});
   
   app.use((req, res, next) => {
-    const path = req.path;
+    const reqPath = req.path;  // 这里改名为 reqPath，避免与 path 模块冲突
     
     // 订阅路径
-    if (path === `/${config.subPath}` || path === `/${config.subPath}/`) {
+    if (reqPath === `/${config.subPath}` || reqPath === `/${config.subPath}/`) {
       const encoded = Buffer.from(subscription).toString('base64');
       res.setHeader('Content-Type', 'text/plain; charset=utf-8');
       return res.send(encoded);
     }
     
     // 根路径
-    if (path === '/') {
+    if (reqPath === '/') {
       // 检查index.html文件
       const indexPaths = ['index.html', '/app/index.html'];
       for (const indexPath of indexPaths) {
@@ -270,16 +270,24 @@ function startHTTPServer() {
     }
     
     // 代理其他请求
-    const target = path.startsWith('/vless-argo') || 
-                   path.startsWith('/vmess-argo') || 
-                   path.startsWith('/trojan-argo') ||
-                   path === '/vless' || 
-                   path === '/vmess' || 
-                   path === '/trojan'
+    const target = reqPath.startsWith('/vless-argo') || 
+                   reqPath.startsWith('/vmess-argo') || 
+                   reqPath.startsWith('/trojan-argo') ||
+                   reqPath === '/vless' || 
+                   reqPath === '/vmess' || 
+                   reqPath === '/trojan'
                    ? 'http://localhost:3001'
                    : `http://localhost:${config.port}`;
     
     proxy.web(req, res, { target });
+  });
+
+  // 处理代理错误
+  proxy.on('error', (err, req, res) => {
+    console.error('代理错误:', err);
+    if (!res.headersSent) {
+      res.status(500).send('代理错误');
+    }
   });
 
   // 启动外部端口代理
@@ -657,7 +665,9 @@ async function extractDomains() {
 // 重启Cloudflared
 async function restartCloudflared() {
   // 停止现有进程
-  exec(`pkill -f ${path.basename(files.bot)}`);
+  exec(`pkill -f ${path.basename(files.bot)}`, (err) => {
+    if (err) console.error(`停止cloudflared失败: ${err}`);
+  });
   
   // 删除日志文件
   try {
