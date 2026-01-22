@@ -8,7 +8,6 @@ const { spawn, exec } = require('child_process');
 const crypto = require('crypto');
 const axios = require('axios');
 const httpProxy = require('http-proxy');
-const base64 = require('base64-js');
 
 // 配置结构
 const config = {
