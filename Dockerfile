@@ -11,7 +11,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # 安装依赖（生产环境依赖）
-RUN npm ci --only=production
+RUN npm install --only=production
 
 # 复制应用代码
 COPY . .
@@ -27,7 +27,6 @@ FROM node:18-alpine
 
 # 安装必要的运行时工具
 RUN apk add --no-cache ca-certificates bash curl wget \
-    && apk add --no-cache --virtual .build-deps python3 make g++ \
     && rm -rf /var/cache/apk/*
 
 # 创建非root用户
