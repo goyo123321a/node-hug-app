@@ -1,17 +1,28 @@
 {
-  "name": "xray-proxy-app",
-  "version": "1.0.0",
-  "description": "Node.js implementation of Xray proxy application",
+  "name": "node-app",
+  "version": "2.0.0",
+  "description": "Network application with proxy functionality",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js"
   },
-  "dependencies": {},
+  "dependencies": {
+    "http-proxy": "^1.18.1"
+  },
   "devDependencies": {
     "nodemon": "^3.0.0"
   },
   "engines": {
     "node": ">=14.0.0"
-  }
+  },
+  "keywords": [
+    "network",
+    "application",
+    "service",
+    "tool",
+    "utility"
+  ],
+  "author": "",
+  "license": "MIT"
 }
