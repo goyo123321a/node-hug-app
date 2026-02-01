@@ -3,942 +3,281 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Docker: Containerization Simplified</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Code+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+    <title>Protecting Our Community Environment</title>
     <style>
-        :root {
-            --docker-blue: #2496ed;
-            --docker-dark-blue: #0d2b3e;
-            --docker-light-blue: #e6f7ff;
-            --docker-gray: #f8f9fa;
-            --docker-dark-gray: #6c757d;
-            --docker-text: #333333;
-            --docker-code-bg: #1e1e1e;
-            --docker-success: #28a745;
-            --docker-warning: #ffc107;
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-
+        
         body {
-            font-family: 'Inter', sans-serif;
-            color: var(--docker-text);
+            background-color: #f0f8f0;
+            color: #333;
             line-height: 1.6;
-            background-color: #ffffff;
         }
-
+        
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 20px;
         }
-
-        /* Header Styles */
+        
         header {
-            background-color: var(--docker-dark-blue);
+            background: linear-gradient(135deg, #2e7d32 0%, #1b5e20 100%);
             color: white;
-            padding: 20px 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .logo-icon {
-            font-size: 2.5rem;
-            color: var(--docker-blue);
-        }
-
-        .logo-text h1 {
-            font-size: 1.8rem;
-            font-weight: 700;
-        }
-
-        .logo-text p {
-            font-size: 0.9rem;
-            opacity: 0.8;
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 25px;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 1rem;
-            transition: color 0.3s ease;
-            padding: 5px 0;
-            position: relative;
-        }
-
-        nav a:hover {
-            color: var(--docker-blue);
-        }
-
-        nav a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: var(--docker-blue);
-            transition: width 0.3s ease;
-        }
-
-        nav a:hover::after {
-            width: 100%;
-        }
-
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(135deg, var(--docker-dark-blue) 0%, #1a5276 100%);
-            color: white;
-            padding: 80px 0;
+            padding: 60px 20px;
             text-align: center;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
-
-        .hero-content {
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
             max-width: 800px;
             margin: 0 auto;
-        }
-
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            font-weight: 700;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
             opacity: 0.9;
         }
-
-        .hero-buttons {
+        
+        .content-section {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            margin: 40px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        h2 {
+            color: #2e7d32;
+            margin-bottom: 25px;
+            font-size: 2rem;
             display: flex;
-            gap: 15px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 12px 30px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: 600;
-            display: inline-flex;
             align-items: center;
-            gap: 8px;
-            transition: all 0.3s ease;
         }
-
-        .btn-primary {
-            background-color: var(--docker-blue);
-            color: white;
+        
+        h2 i {
+            margin-right: 15px;
+            font-size: 1.8rem;
         }
-
-        .btn-primary:hover {
-            background-color: #1a7bbd;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(36, 150, 237, 0.3);
-        }
-
-        .btn-secondary {
-            background-color: transparent;
-            color: white;
-            border: 2px solid white;
-        }
-
-        .btn-secondary:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-            transform: translateY(-2px);
-        }
-
-        /* Main Content */
-        .section {
-            padding: 80px 0;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-
-        .section-title h2 {
-            font-size: 2.5rem;
-            color: var(--docker-dark-blue);
-            margin-bottom: 15px;
-        }
-
-        .section-title p {
-            color: var(--docker-dark-gray);
-            max-width: 700px;
-            margin: 0 auto;
+        
+        p {
+            margin-bottom: 20px;
             font-size: 1.1rem;
         }
-
-        /* What is Docker */
-        .what-is-docker {
-            background-color: var(--docker-gray);
-        }
-
-        .docker-explanation {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 50px;
-            align-items: center;
-        }
-
-        .explanation-text h3 {
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-            color: var(--docker-dark-blue);
-        }
-
-        .explanation-text p {
-            margin-bottom: 15px;
-        }
-
-        .docker-diagram {
-            background-color: white;
-            border-radius: 10px;
-            padding: 30px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-        }
-
-        .diagram-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .diagram-row {
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-            margin-bottom: 20px;
-        }
-
-        .diagram-item {
-            text-align: center;
-            padding: 15px;
-            border-radius: 8px;
-            width: 30%;
-            background-color: var(--docker-light-blue);
-            border: 1px solid #cce7ff;
-        }
-
-        .diagram-item i {
-            font-size: 2rem;
-            color: var(--docker-blue);
-            margin-bottom: 10px;
-        }
-
-        .diagram-arrow {
-            font-size: 1.5rem;
-            color: var(--docker-blue);
-            margin: 10px 0;
-        }
-
-        /* Docker Benefits */
-        .benefits-grid {
+        
+        .tips-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+            gap: 25px;
+            margin-top: 30px;
         }
-
-        .benefit-card {
-            background-color: white;
-            border-radius: 10px;
-            padding: 30px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease;
+        
+        .tip-card {
+            background: #e8f5e9;
+            border-radius: 12px;
+            padding: 25px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-left: 5px solid #4caf50;
         }
-
-        .benefit-card:hover {
-            transform: translateY(-10px);
+        
+        .tip-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         }
-
-        .benefit-icon {
-            font-size: 2.5rem;
-            color: var(--docker-blue);
-            margin-bottom: 20px;
-        }
-
-        .benefit-card h3 {
-            font-size: 1.5rem;
+        
+        .tip-card h3 {
+            color: #1b5e20;
             margin-bottom: 15px;
-            color: var(--docker-dark-blue);
+            font-size: 1.4rem;
         }
-
-        /* Docker Commands */
-        .docker-commands {
-            background-color: var(--docker-gray);
+        
+        .quote {
+            background: #e8f5e9;
+            border-left: 5px solid #4caf50;
+            padding: 25px;
+            margin: 30px 0;
+            font-style: italic;
+            font-size: 1.2rem;
+            border-radius: 0 10px 10px 0;
         }
-
-        .command-examples {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+        
+        .quote-author {
+            text-align: right;
+            margin-top: 15px;
+            font-weight: bold;
+            color: #2e7d32;
         }
-
-        .command-card {
-            background-color: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-        }
-
-        .command-header {
-            background-color: var(--docker-dark-blue);
+        
+        .call-to-action {
+            background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%);
             color: white;
-            padding: 15px 20px;
-            font-weight: 600;
+            padding: 50px;
+            text-align: center;
+            border-radius: 15px;
+            margin: 40px 0;
         }
-
-        .command-body {
-            padding: 20px;
-            font-family: 'Source Code Pro', monospace;
-            background-color: var(--docker-code-bg);
-            color: #f8f8f2;
-            overflow-x: auto;
+        
+        .call-to-action h2 {
+            color: white;
+            margin-bottom: 20px;
         }
-
-        .command-body code {
-            font-size: 0.9rem;
-            line-height: 1.5;
+        
+        .btn {
+            display: inline-block;
+            background: white;
+            color: #2e7d32;
+            padding: 14px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
-
-        .command-desc {
-            padding: 15px 20px;
-            font-size: 0.95rem;
-            color: var(--docker-dark-gray);
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
         }
-
-        /* Docker Architecture */
-        .architecture-container {
+        
+        footer {
+            background: #1b5e20;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+            border-radius: 20px 20px 0 0;
+        }
+        
+        .stats {
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .architecture-img {
-            width: 100%;
-            max-width: 700px;
-            margin-bottom: 30px;
-        }
-
-        .architecture-steps {
-            display: flex;
+            justify-content: space-around;
             flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
+            margin: 40px 0;
         }
-
-        .architecture-step {
+        
+        .stat-item {
+            text-align: center;
+            padding: 20px;
             flex: 1;
             min-width: 200px;
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            border-left: 4px solid var(--docker-blue);
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
         }
-
-        .step-number {
-            display: inline-block;
-            background-color: var(--docker-blue);
-            color: white;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 30px;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-
-        /* CTA Section */
-        .cta-section {
-            background: linear-gradient(135deg, var(--docker-dark-blue) 0%, #1a5276 100%);
-            color: white;
-            text-align: center;
-            padding: 80px 0;
-        }
-
-        .cta-section h2 {
+        
+        .stat-number {
             font-size: 2.5rem;
-            margin-bottom: 20px;
-        }
-
-        .cta-section p {
-            max-width: 700px;
-            margin: 0 auto 30px;
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
-
-        /* Footer */
-        footer {
-            background-color: #0c1f2a;
-            color: white;
-            padding: 60px 0 30px;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-
-        .footer-column h3 {
-            font-size: 1.3rem;
-            margin-bottom: 20px;
-            color: var(--docker-blue);
-        }
-
-        .footer-column ul {
-            list-style: none;
-        }
-
-        .footer-column li {
+            font-weight: bold;
+            color: #2e7d32;
             margin-bottom: 10px;
         }
-
-        .footer-column a {
-            color: #b0b7c3;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .footer-column a:hover {
-            color: var(--docker-blue);
-        }
-
-        .copyright {
-            text-align: center;
-            padding-top: 30px;
-            border-top: 1px solid #1a3a4d;
-            color: #b0b7c3;
-            font-size: 0.9rem;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 992px) {
-            .docker-explanation {
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .content-section {
+                padding: 25px;
+            }
+            
+            .tips-grid {
                 grid-template-columns: 1fr;
             }
             
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-        }
-
-        @media (max-width: 768px) {
-            nav ul {
-                display: none;
-            }
-            
-            .mobile-menu-btn {
-                display: block;
-            }
-            
-            .hero h1 {
-                font-size: 2rem;
-            }
-            
-            .hero-buttons {
+            .stats {
                 flex-direction: column;
-                align-items: center;
-            }
-            
-            .btn {
-                width: 100%;
-                max-width: 300px;
-                justify-content: center;
-            }
-            
-            .section {
-                padding: 60px 0;
-            }
-            
-            .section-title h2 {
-                font-size: 2rem;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .diagram-row {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .diagram-item {
-                width: 80%;
-                margin-bottom: 15px;
-            }
-            
-            .architecture-step {
-                min-width: 100%;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
     <header>
         <div class="container">
-            <div class="header-content">
-                <div class="logo">
-                    <div class="logo-icon">
-                        <i class="fab fa-docker"></i>
-                    </div>
-                    <div class="logo-text">
-                        <h1>Docker Guide</h1>
-                        <p>Containerization Simplified</p>
-                    </div>
-                </div>
-                <nav>
-                    <ul>
-                        <li><a href="#what-is-docker">What is Docker</a></li>
-                        <li><a href="#benefits">Benefits</a></li>
-                        <li><a href="#commands">Commands</a></li>
-                        <li><a href="#architecture">Architecture</a></li>
-                        <li><a href="#get-started">Get Started</a></li>
-                    </ul>
-                </nav>
-                <button class="mobile-menu-btn" id="mobileMenuBtn">
-                    <i class="fas fa-bars"></i>
-                </button>
-            </div>
+            <h1>Protect Our Community Environment</h1>
+            <p class="subtitle">Together we can create a cleaner, healthier, and more sustainable community for everyone</p>
         </div>
     </header>
-
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1>Package, Ship, and Run Any Application</h1>
-                <p>Docker is a platform for developing, shipping, and running applications in containers. It enables you to separate your applications from your infrastructure so you can deliver software quickly.</p>
-                <div class="hero-buttons">
-                    <a href="#get-started" class="btn btn-primary">
-                        <i class="fas fa-rocket"></i> Get Started
-                    </a>
-                    <a href="https://docs.docker.com/" target="_blank" class="btn btn-secondary">
-                        <i class="fas fa-book"></i> Documentation
-                    </a>
+    
+    <div class="container">
+        <section class="content-section">
+            <h2><i>🌍</i> Why Community Environment Matters</h2>
+            <p>A healthy community environment is essential for our wellbeing, quality of life, and the prosperity of future generations. When we protect our local environment, we're investing in cleaner air, safer neighborhoods, and sustainable resources.</p>
+            <p>Community environmental protection goes beyond just recycling - it's about creating spaces where people and nature can thrive together. From neighborhood parks to local waterways, every aspect of our community environment impacts our daily lives.</p>
+            
+            <div class="quote">
+                "We won't have a society if we destroy the environment."
+                <div class="quote-author">- Margaret Mead</div>
+            </div>
+        </section>
+        
+        <section class="content-section">
+            <h2><i>💡</i> Simple Ways to Protect Our Environment</h2>
+            <div class="tips-grid">
+                <div class="tip-card">
+                    <h3>Reduce, Reuse, Recycle</h3>
+                    <p>Practice the 3 Rs to minimize waste. Choose products with minimal packaging, find new uses for items, and properly separate recyclables.</p>
                 </div>
+                
+                <div class="tip-card">
+                    <h3>Conserve Water</h3>
+                    <p>Fix leaks promptly, install water-saving devices, and use drought-resistant plants in your garden to reduce water consumption.</p>
+                </div>
+                
+                <div class="tip-card">
+                    <h3>Use Eco-Friendly Transportation</h3>
+                    <p>Walk, bike, carpool, or use public transportation when possible. This reduces air pollution and traffic congestion.</p>
+                </div>
+                
+                <div class="tip-card">
+                    <h3>Support Local Conservation</h3>
+                    <p>Participate in local clean-up events, support community gardens, and get involved with environmental organizations in your area.</p>
+                </div>
+                
+                <div class="tip-card">
+                    <h3>Plant Native Species</h3>
+                    <p>Native plants require less water and maintenance while providing habitat for local wildlife and preserving biodiversity.</p>
+                </div>
+                
+                <div class="tip-card">
+                    <h3>Reduce Energy Consumption</h3>
+                    <p>Switch to LED bulbs, unplug electronics when not in use, and consider energy-efficient appliances to lower your carbon footprint.</p>
+                </div>
+            </div>
+        </section>
+        
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-number">75%</div>
+                <p>of litter found on beaches comes from inland sources</p>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">1M+</div>
+                <p>marine animals die each year from plastic pollution</p>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">40%</div>
+                <p>reduction in energy use with proper home insulation</p>
             </div>
         </div>
-    </section>
-
-    <!-- What is Docker Section -->
-    <section class="section what-is-docker" id="what-is-docker">
-        <div class="container">
-            <div class="section-title">
-                <h2>What is Docker?</h2>
-                <p>Docker is a containerization platform that packages applications and their dependencies into standardized units called containers</p>
-            </div>
-            <div class="docker-explanation">
-                <div class="explanation-text">
-                    <h3>Containers vs Virtual Machines</h3>
-                    <p>Unlike virtual machines which require a full operating system for each application, Docker containers share the host system's kernel and isolate the application processes from each other.</p>
-                    <p>This makes containers lightweight, fast to start, and efficient in resource usage compared to traditional virtualization.</p>
-                    <p>Docker provides a consistent environment for your application from development through production, solving the "it works on my machine" problem.</p>
-                    <p>With Docker, you can build an image once and run it anywhere - on your laptop, in test environments, or in production on cloud platforms.</p>
-                </div>
-                <div class="docker-diagram">
-                    <div class="diagram-container">
-                        <div class="diagram-row">
-                            <div class="diagram-item">
-                                <i class="fas fa-laptop-code"></i>
-                                <h4>Develop</h4>
-                                <p>Build your application</p>
-                            </div>
-                            <div class="diagram-item">
-                                <i class="fas fa-box"></i>
-                                <h4>Package</h4>
-                                <p>Create Docker image</p>
-                            </div>
-                            <div class="diagram-item">
-                                <i class="fas fa-ship"></i>
-                                <h4>Ship</h4>
-                                <p>Share via registry</p>
-                            </div>
-                        </div>
-                        <div class="diagram-arrow">
-                            <i class="fas fa-arrow-down"></i>
-                        </div>
-                        <div class="diagram-row">
-                            <div class="diagram-item">
-                                <i class="fas fa-play-circle"></i>
-                                <h4>Run</h4>
-                                <p>Deploy anywhere</p>
-                            </div>
-                            <div class="diagram-item">
-                                <i class="fas fa-sync-alt"></i>
-                                <h4>Scale</h4>
-                                <p>Scale effortlessly</p>
-                            </div>
-                            <div class="diagram-item">
-                                <i class="fas fa-tasks"></i>
-                                <h4>Manage</h4>
-                                <p>Orchestrate with tools</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Docker Benefits Section -->
-    <section class="section" id="benefits">
-        <div class="container">
-            <div class="section-title">
-                <h2>Why Use Docker?</h2>
-                <p>Docker provides numerous benefits for developers, operations teams, and organizations</p>
-            </div>
-            <div class="benefits-grid">
-                <div class="benefit-card">
-                    <div class="benefit-icon">
-                        <i class="fas fa-tachometer-alt"></i>
-                    </div>
-                    <h3>Fast Deployment</h3>
-                    <p>Containers can be created and started in seconds, significantly reducing deployment time compared to traditional VMs.</p>
-                </div>
-                <div class="benefit-card">
-                    <div class="benefit-icon">
-                        <i class="fas fa-balance-scale"></i>
-                    </div>
-                    <h3>Resource Efficiency</h3>
-                    <p>Containers share the host OS kernel, making them much lighter and more efficient than virtual machines.</p>
-                </div>
-                <div class="benefit-card">
-                    <div class="benefit-icon">
-                        <i class="fas fa-sync-alt"></i>
-                    </div>
-                    <h3>Consistency</h3>
-                    <p>Containers ensure consistency across multiple development, testing, and production environments.</p>
-                </div>
-                <div class="benefit-card">
-                    <div class="benefit-icon">
-                        <i class="fas fa-cloud"></i>
-                    </div>
-                    <h3>Portability</h3>
-                    <p>Containerized applications can run on any system that supports Docker, regardless of the underlying infrastructure.</p>
-                </div>
-                <div class="benefit-card">
-                    <div class="benefit-icon">
-                        <i class="fas fa-expand-arrows-alt"></i>
-                    </div>
-                    <h3>Scalability</h3>
-                    <p>Easily scale applications up or down by adding or removing container instances as needed.</p>
-                </div>
-                <div class="benefit-card">
-                    <div class="benefit-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h3>Isolation</h3>
-                    <p>Applications run in isolated containers, improving security and preventing conflicts between dependencies.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Docker Commands Section -->
-    <section class="section docker-commands" id="commands">
-        <div class="container">
-            <div class="section-title">
-                <h2>Essential Docker Commands</h2>
-                <p>Basic commands to get started with Docker</p>
-            </div>
-            <div class="command-examples">
-                <div class="command-card">
-                    <div class="command-header">
-                        <i class="fas fa-download"></i> Pull an Image
-                    </div>
-                    <div class="command-body">
-                        <code>docker pull nginx:latest</code>
-                    </div>
-                    <div class="command-desc">
-                        Downloads the specified image from Docker Hub to your local machine.
-                    </div>
-                </div>
-                <div class="command-card">
-                    <div class="command-header">
-                        <i class="fas fa-play"></i> Run a Container
-                    </div>
-                    <div class="command-body">
-                        <code>docker run -d -p 80:80 --name webserver nginx</code>
-                    </div>
-                    <div class="command-desc">
-                        Runs a container from the nginx image in detached mode, mapping port 80.
-                    </div>
-                </div>
-                <div class="command-card">
-                    <div class="command-header">
-                        <i class="fas fa-list"></i> List Containers
-                    </div>
-                    <div class="command-body">
-                        <code>docker ps -a</code>
-                    </div>
-                    <div class="command-desc">
-                        Lists all containers (running and stopped) on your system.
-                    </div>
-                </div>
-                <div class="command-card">
-                    <div class="command-header">
-                        <i class="fas fa-terminal"></i> Execute Commands
-                    </div>
-                    <div class="command-body">
-                        <code>docker exec -it webserver bash</code>
-                    </div>
-                    <div class="command-desc">
-                        Opens an interactive bash shell inside the running container named "webserver".
-                    </div>
-                </div>
-                <div class="command-card">
-                    <div class="command-header">
-                        <i class="fas fa-hammer"></i> Build an Image
-                    </div>
-                    <div class="command-body">
-                        <code>docker build -t myapp:1.0 .</code>
-                    </div>
-                    <div class="command-desc">
-                        Builds a Docker image from the Dockerfile in the current directory.
-                    </div>
-                </div>
-                <div class="command-card">
-                    <div class="command-header">
-                        <i class="fas fa-trash-alt"></i> Clean Up
-                    </div>
-                    <div class="command-body">
-                        <code>docker system prune -a</code>
-                    </div>
-                    <div class="command-desc">
-                        Removes all stopped containers, unused networks, and dangling images.
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Docker Architecture Section -->
-    <section class="section" id="architecture">
-        <div class="container">
-            <div class="section-title">
-                <h2>Docker Architecture</h2>
-                <p>How Docker components work together</p>
-            </div>
-            <div class="architecture-container">
-                <div class="architecture-img">
-                    <div style="background-color: var(--docker-light-blue); border-radius: 10px; padding: 30px; text-align: center;">
-                        <h3 style="color: var(--docker-dark-blue); margin-bottom: 20px;">Docker Architecture Overview</h3>
-                        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px;">
-                            <div style="flex: 1; min-width: 200px; background-color: white; padding: 20px; border-radius: 8px; box-shadow: 0 3px 10px rgba(0,0,0,0.1);">
-                                <h4 style="color: var(--docker-blue); margin-bottom: 10px;"><i class="fas fa-user"></i> Docker Client</h4>
-                                <p>CLI or GUI to interact with Docker</p>
-                            </div>
-                            <div style="flex: 1; min-width: 200px; background-color: white; padding: 20px; border-radius: 8px; box-shadow: 0 3px 10px rgba(0,0,0,0.1);">
-                                <h4 style="color: var(--docker-blue); margin-bottom: 10px;"><i class="fas fa-server"></i> Docker Daemon</h4>
-                                <p>Listens for API requests and manages containers</p>
-                            </div>
-                            <div style="flex: 1; min-width: 200px; background-color: white; padding: 20px; border-radius: 8px; box-shadow: 0 3px 10px rgba(0,0,0,0.1);">
-                                <h4 style="color: var(--docker-blue); margin-bottom: 10px;"><i class="fas fa-database"></i> Docker Registry</h4>
-                                <p>Stores Docker images (Docker Hub, private registries)</p>
-                            </div>
-                        </div>
-                        <div style="margin-top: 30px; color: var(--docker-dark-gray);">
-                            <p>The Docker client talks to the Docker daemon, which builds, runs, and distributes Docker containers.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="architecture-steps">
-                    <div class="architecture-step">
-                        <div class="step-number">1</div>
-                        <h4>Dockerfile</h4>
-                        <p>Text document containing commands to assemble an image</p>
-                    </div>
-                    <div class="architecture-step">
-                        <div class="step-number">2</div>
-                        <h4>Image</h4>
-                        <p>Read-only template with instructions for creating a container</p>
-                    </div>
-                    <div class="architecture-step">
-                        <div class="step-number">3</div>
-                        <h4>Container</h4>
-                        <p>Runnable instance of an image with its own isolated environment</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Get Started Section -->
-    <section class="section cta-section" id="get-started">
-        <div class="container">
-            <h2>Ready to Start with Docker?</h2>
-            <p>Join millions of developers who use Docker to build, share, and run applications. Docker simplifies development workflows and accelerates software delivery.</p>
-            <div class="hero-buttons">
-                <a href="https://docs.docker.com/get-docker/" target="_blank" class="btn btn-primary">
-                    <i class="fas fa-download"></i> Install Docker
-                </a>
-                <a href="https://docs.docker.com/get-started/" target="_blank" class="btn btn-secondary">
-                    <i class="fas fa-graduation-cap"></i> Tutorial
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
+        
+        <section class="call-to-action">
+            <h2>Join the Movement Today</h2>
+            <p>Your actions, no matter how small, can make a significant difference in protecting our community environment. Start with one change today and inspire others to do the same.</p>
+            <a href="#" class="btn">Get Involved</a>
+        </section>
+    </div>
+    
     <footer>
         <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <h3>Docker Guide</h3>
-                    <p>An introduction to Docker containerization technology for developers and DevOps engineers.</p>
-                    <div style="margin-top: 20px;">
-                        <a href="#" style="font-size: 1.5rem; margin-right: 15px;"><i class="fab fa-github"></i></a>
-                        <a href="#" style="font-size: 1.5rem; margin-right: 15px;"><i class="fab fa-twitter"></i></a>
-                        <a href="#" style="font-size: 1.5rem;"><i class="fab fa-linkedin"></i></a>
-                    </div>
-                </div>
-                <div class="footer-column">
-                    <h3>Resources</h3>
-                    <ul>
-                        <li><a href="https://docs.docker.com/" target="_blank">Official Documentation</a></li>
-                        <li><a href="https://hub.docker.com/" target="_blank">Docker Hub</a></li>
-                        <li><a href="https://www.docker.com/products/docker-desktop" target="_blank">Docker Desktop</a></li>
-                        <li><a href="https://github.com/docker" target="_blank">GitHub Repositories</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Learn More</h3>
-                    <ul>
-                        <li><a href="https://www.docker.com/101-tutorial" target="_blank">Docker 101 Tutorial</a></li>
-                        <li><a href="https://training.docker.com/" target="_blank">Docker Training</a></li>
-                        <li><a href="https://www.docker.com/blog/" target="_blank">Docker Blog</a></li>
-                        <li><a href="https://www.docker.com/community" target="_blank">Community</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Related Technologies</h3>
-                    <ul>
-                        <li><a href="https://kubernetes.io/" target="_blank">Kubernetes</a></li>
-                        <li><a href="https://www.docker.com/products/docker-compose" target="_blank">Docker Compose</a></li>
-                        <li><a href="https://www.docker.com/products/container-registry" target="_blank">Docker Registry</a></li>
-                        <li><a href="https://www.docker.com/products/docker-swarm" target="_blank">Docker Swarm</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="copyright">
-                <p>&copy; 2023 Docker Guide. This is an educational resource. Docker is a trademark of Docker, Inc.</p>
-            </div>
+            <p>© 2023 Community Environment Protection Initiative</p>
+            <p>Together, we can create a sustainable future for our community</p>
         </div>
     </footer>
-
-    <script>
-        // Mobile menu functionality
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const navMenu = document.querySelector('nav ul');
-        
-        mobileMenuBtn.addEventListener('click', () => {
-            if (navMenu.style.display === 'flex') {
-                navMenu.style.display = 'none';
-                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
-            } else {
-                navMenu.style.display = 'flex';
-                navMenu.style.flexDirection = 'column';
-                navMenu.style.position = 'absolute';
-                navMenu.style.top = '100%';
-                navMenu.style.right = '20px';
-                navMenu.style.backgroundColor = 'var(--docker-dark-blue)';
-                navMenu.style.padding = '20px';
-                navMenu.style.borderRadius = '8px';
-                navMenu.style.boxShadow = '0 5px 15px rgba(0,0,0,0.2)';
-                navMenu.style.gap = '15px';
-                mobileMenuBtn.innerHTML = '<i class="fas fa-times"></i>';
-            }
-        });
-        
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('nav a').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-                
-                // Close mobile menu if open
-                if (window.innerWidth <= 768) {
-                    navMenu.style.display = 'none';
-                    mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
-                }
-                
-                window.scrollTo({
-                    top: targetElement.offsetTop - 80,
-                    behavior: 'smooth'
-                });
-            });
-        });
-        
-        // Button hover effects
-        document.querySelectorAll('.btn').forEach(button => {
-            button.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-2px)';
-            });
-            
-            button.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0)';
-            });
-        });
-        
-        // Benefit card hover effects
-        document.querySelectorAll('.benefit-card').forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                this.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.1)';
-            });
-            
-            card.addEventListener('mouseleave', function() {
-                this.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.05)';
-            });
-        });
-    </script>
 </body>
 </html>
